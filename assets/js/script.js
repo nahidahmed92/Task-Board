@@ -84,8 +84,24 @@ function handleAddTask(event) {
   renderTaskList();
 }
 
-// Todo: create a function to handle deleting a task
-function handleDeleteTask(event) {}
+// function to handle deleting a task
+function handleDeleteTask(event) {
+  const taskId = $(this).attr('data-task-id');
+  const taskLists = JSON.parse(localStorage.getItem('tasks'));
+  console.log('button id: ', taskId);
+
+  taskLists.forEach((taskList) => {
+    console.log('tasklistID: ', taskList.id);
+    if (taskList.id == taskId) {
+      console.log('delete button pressed');
+      taskLists.splice(taskLists.indexOf(taskList), 1);
+    }
+  });
+
+  taskLists.push(newTaskList);
+  localStorage.setItem('tasks', JSON.stringify(taskLists));
+  renderTaskList();
+}
 
 // Todo: create a function to handle dropping a task into a new status lane
 function handleDrop(event, ui) {}
