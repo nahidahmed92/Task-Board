@@ -16,6 +16,53 @@ if (!taskLists) {
   console.log('taskList is empty');
 }
 
+// FUNCTIONS =========================================
+function generateTaskId() {
+  const uniqueId = Math.floor(Math.random() * 1000000);
+  return uniqueId;
+}
+
+// function to create a task card
+function createTaskCard(taskList) {
+  // CREATE & BUILD
+  const taskCardEl = $('<div>')
+    .addClass('card text-center my-3 draggable droppable sortable')
+    .attr('data-task-id', taskList.id);
+  const titleEl = $('<h3>').addClass('card-header').text(taskList.taskTitle);
+  const cardBody = $('<div>').addClass('card-body text');
+  const descEl = $('<p>').addClass('card-title').text(taskList.desc);
+  const dateEl = $('<p>').addClass('card-title').text(taskList.date);
+  const deleteBtn = $('<button>')
+    .addClass('btn btn-danger')
+    .attr('data-task-id', taskList.id)
+    .text('Delete');
+
+  deleteBtn.on('click', handleDeleteTask);
+
+  const today = dayjs();
+  const taskDate = dayjs(taskList.date, 'MM/DD/YYYY');
+
+  // if task status is not done then color
+  if (taskList.date && taskList.status !== 'done') {
+    // if task is due same due or late then color
+    if (today.isSame(taskDate, 'day')) {
+      taskCardEl.addClass('bg-warning text-white');
+    } else if (today.isAfter(taskDate)) {
+      taskCardEl.addClass('bg-danger text-white');
+      deleteBtn.addClass('border-white');
+    }
+  }
+
+  // PLACE
+  taskCardEl.append(titleEl);
+  taskCardEl.append(cardBody);
+  cardBody.append(descEl);
+  cardBody.append(dateEl);
+  cardBody.append(deleteBtn);
+
+  return taskCardEl;
+}
+
 // function to render the task list and make cards draggable
 function renderTaskList() {
   const taskLists = JSON.parse(localStorage.getItem('tasks'));
@@ -52,12 +99,6 @@ function renderTaskList() {
     },
   });
 }
-
-// Todo: create a function to create a task card
-function createTaskCard(task) {}
-
-// Todo: create a function to render the task list and make cards draggable
-function renderTaskList() {}
 
 // handles adding tasks and then rendering on page
 function handleAddTask(event) {
@@ -103,8 +144,39 @@ function handleDeleteTask(event) {
   renderTaskList();
 }
 
-// Todo: create a function to handle dropping a task into a new status lane
-function handleDrop(event, ui) {}
+// function to handle dropping a task into a new status lane
+function handleDrop(event, ui) {
+  const taskLists = JSON.parse(localStorage.getItem('tasks'));
+  const taskIds = ui.draggable[0].dataset.taskId;
+  const newStat = event.target.id;
 
-// Todo: when the page loads, render the task list, add event listeners, make lanes droppable, and make the due date field a date picker
-$(document).ready(function () {});
+  for (let taskList of taskLists) {
+    if (taskList.id == taskIds) {
+      taskList.status = newStat;
+    }
+  }
+
+  localStorage.setItem('tasks', JSON.stringify(taskLists));
+  renderTaskList();
+}
+
+// USER INTERACTIONS =================================
+taskFormEl.on('click', '.btn-delete-task', handleDeleteTask);
+addTaskBtn.on('click', handleAddTask);
+
+// INITIALIZATION ====================================
+// when the page loads, render the task list and make lanes droppable
+$(document).ready(function () {
+  renderTaskList();
+
+  $('#task-date').datepicker({
+    changeMonth: true,
+    changeYear: true,
+  });
+
+  // Make lanes droppable
+  $('.lane').droppable({
+    accept: '.draggable',
+    drop: handleDrop,
+  });
+});
