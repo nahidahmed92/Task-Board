@@ -29,3 +29,7 @@ https://nahidahmed92.github.io/Task-Board/
 ### After deleting, localStorage updates
 
 ![[Screenshot of Github Live Page]](assets/images/after-delete.png)
+
+### Datepicker
+
+![[Screenshot of Github Live Page]](assets/images/date-picker.png)
