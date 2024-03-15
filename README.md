@@ -10,14 +10,22 @@ https://nahidahmed92.github.io/Task-Board/
 
 ## Screenshots
 
-### Description of Screenshot
+### 3 Tasks Added to ToDo - (One with each status)
 
-![[Screenshot of Github Live Page]](assets/Images/)
+![[Screenshot of Github Live Page]](assets/images/main.png)
 
-### Description of Screenshot
+### In-Progress
 
-![[Screenshot of Github Live Page]](assets/Images/)
+![[Screenshot of Github Live Page]](assets/images/in-progress.png)
 
-### Description of Screenshot
+### Done
 
-![[Screenshot of Github Live Page]](assets/Images/)
+![[Screenshot of Github Live Page]](assets/images/done.png)
+
+### localStorage shows all items in object
+
+![[Screenshot of Github Live Page]](assets/images/prior-to-delete.png)
+
+### After deleting, localStorage updates
+
+![[Screenshot of Github Live Page]](assets/images/after-delete.png)
