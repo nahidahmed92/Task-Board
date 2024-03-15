@@ -16,8 +16,42 @@ if (!taskLists) {
   console.log('taskList is empty');
 }
 
-// Todo: create a function to generate a unique task id
-function generateTaskId() {}
+// function to render the task list and make cards draggable
+function renderTaskList() {
+  const taskLists = JSON.parse(localStorage.getItem('tasks'));
+
+  // Empty cards from lanes
+  todoCards.empty();
+  inProgCards.empty();
+  doneCards.empty();
+
+  for (let taskList of taskLists) {
+    if (taskList.status === 'to-do') {
+      todoCards.append(createTaskCard(taskList));
+    } else if (taskList.status === 'in-progress') {
+      inProgCards.append(createTaskCard(taskList));
+    } else if (taskList.status === 'done') {
+      doneCards.append(createTaskCard(taskList));
+    }
+  }
+
+  // Use JQuery UI to make task cards draggable... this was taken from the lesson 5 student project
+  $('.draggable').draggable({
+    opacity: 0.7,
+    zIndex: 100,
+    // creates the clone of the card that is dragged.
+    helper: function (e) {
+      // Check if the target of the drag event is the card itself or a child element.
+      const original = $(e.target).hasClass('.draggable')
+        ? $(e.target)
+        : $(e.target).closest('.ui-draggable');
+      // Return the clone with the width set to the width of the original card.
+      return original.clone().css({
+        width: original.outerWidth(),
+      });
+    },
+  });
+}
 
 // Todo: create a function to create a task card
 function createTaskCard(task) {}
