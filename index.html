@@ -48,7 +48,7 @@
                 aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <form id="task-form" class="row g-3" action="" method="get">
+              <form id="task-form" class="row g-3">
                 <div class="col-md-6">
                   <label for="task-title" class="form-label">Task Title</label>
                   <input
@@ -145,24 +145,6 @@
       src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
       integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
       crossorigin="anonymous"></script>
-
-    <script>
-      $(function () {
-        $('#task-date').datepicker();
-      });
-
-      $(function () {
-        $('#sortable').sortable({
-          revert: true,
-        });
-        $('#draggable').draggable({
-          connectToSortable: '#sortable',
-          helper: 'clone',
-          revert: 'invalid',
-        });
-        $('ul, li').disableSelection();
-      });
-    </script>
 
     <script src="./assets/js/script.js"></script>
   </body>
