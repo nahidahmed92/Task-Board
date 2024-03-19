@@ -65,7 +65,7 @@ function createTaskCard(taskList) {
 
 // function to render the task list and make cards draggable
 function renderTaskList() {
-  const taskLists = JSON.parse(localStorage.getItem('tasks'));
+  const taskLists = JSON.parse(localStorage.getItem('tasks')) || []; // maybe add || [];
 
   // Empty cards from lanes
   todoCards.empty();
